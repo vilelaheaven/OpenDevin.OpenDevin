@@ -1,18 +1,18 @@
 FROM python:3.11-slim
 
-# Instala Node.js 18.x e dependências do sistema
+# Instala Node.js 18.x e dependências
 RUN apt-get update && apt-get install -y curl git build-essential \
   && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs \
   && apt-get clean
 
-# Diretório de trabalho
+# Diretório do app
 WORKDIR /app
 
 # Copia os arquivos
 COPY . .
 
-# Instala o Poetry
+# Instala Poetry
 RUN pip install poetry
 
 # Instala dependências do backend
@@ -25,8 +25,8 @@ RUN npm install && npm run build
 # Volta pro backend
 WORKDIR /app
 
-# Expõe a porta
+# Expõe porta
 EXPOSE 3000
 
-# Comando de inicialização
+# Inicia backend
 CMD ["uvicorn", "opendevin.server.listen:app", "--host", "0.0.0.0", "--port", "3000"]
