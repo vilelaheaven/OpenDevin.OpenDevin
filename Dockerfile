@@ -13,10 +13,10 @@ WORKDIR /app
 COPY . .
 
 # Instala Poetry
-RUN pip install poetry
+COPY requirements.txt .
 
 # Instala dependências do backend
-RUN poetry config virtualenvs.create false && poetry install --no-root
+RUN pip install -r requirements.txt
 
 # Compila o frontend
 WORKDIR /app/frontend
